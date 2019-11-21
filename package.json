@@ -1,23 +1,25 @@
 {
-  "name": "app-1",
+  "name": "attacc",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "start": "node server.js",
     "dev": "parcel src/index.html",
     "build": "parcel build src/index.html"
   },
   "dependencies": {
-    "bootstrap": "^4.3.1",
-    "parcel-bundler": "^1.12.3",
-    "underscore": "^1.9.1",
-    "vue": "^2.6.10",
-    "vue-hot-reload-api": "^2.3.4",
     "@babel/core": "^7.0.0-0",
     "@babel/preset-env": "^7.5.5",
     "@vue/component-compiler-utils": "^3.0.0",
+    "bootstrap": "^4.3.1",
+    "express": "^4.17.1",
+    "parcel-bundler": "^1.12.3",
     "sass": "^1.22.9",
     "typescript": "^3.7.2",
+    "underscore": "^1.9.1",
+    "vue": "^2.6.10",
+    "vue-hot-reload-api": "^2.3.4",
     "vue-template-compiler": "^2.6.10"
   }
 }
