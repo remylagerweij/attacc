@@ -1,7 +1,7 @@
-# attacc
+# Attacc game
 Vue based game where you can fight a dragon.
 
-# setup
+# Setup
 
 ## Dependencies
 - Yarn
