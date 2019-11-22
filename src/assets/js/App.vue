@@ -2,7 +2,7 @@
   <div class="container">
     <h1 class="mt-5">{{this.title}}</h1>
     <div class="row mt-5">
-      <div class="col-md-6">
+      <div class="col-md-6 mt-2">
         <div class="player">
           <h2>🗡️ Player</h2>
           <div class="progress">
@@ -10,7 +10,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6 mt-2">
         <div class="dragon">
           <h2>🐉 Dragon</h2>
           <div class="progress">
@@ -25,7 +25,7 @@
           <button class="btn btn-primary" @click="performAction('player', 'dragon', 'attacc')">Attac</button>
           <button class="btn btn-secondary" @click="performAction('player', 'dragon', 'protecc')">Protecc</button>
           <button class="btn btn-danger" @click="performAction('player', 'dragon', 'healthChecc')">Health Checc</button>
-          <button class="btn btn-warning" @click="performAction('player', 'dragon', 'whatTheHecc')">What the hecc?!</button>
+          <button class="btn btn-warning" @click="resetGame()">Restart Game</button>
         </div>
         <div class="log-bar">
           <ul>
@@ -63,6 +63,18 @@ export default Vue.extend({
       actionLog: []
     }
   },
+  watch: {
+    'stats.player': function (val) {
+      if (val > 100) {
+        this.stats.player = 100
+      }
+    },
+    'stats.dragon': function(val) {
+      if (val > 100) {
+        this.stats.dragon = 100
+      }
+    }
+  },
   mounted: function () {
     let date = new Date();
     this.year = date.getFullYear();
@@ -90,30 +102,30 @@ export default Vue.extend({
         healthChecc: () => {
           totalPoints = this.diceRoll()
           this.stats[performer] = this.stats[performer] + totalPoints
-        },
-        whatTheHecc: () => {
-          this.stats["dragon"] = 100
-          this.stats["player"] = 100
-          this.actionLog = []
-        },
+        }
       }
       actions[action]()
       this.logAction(performer, action, totalPoints)
 
       if (performer == "player") {
         const keys = Object.keys(actions)
-        let dragonAction = keys[_.random(0, keys.length - 2)]
+        let dragonAction = keys[_.random(0, keys.length - 1)]
         this.performAction("dragon", "player", dragonAction)
       }
 
       if (this.stats.player <= 0) {
-        actions.whatTheHecc();
+        this.resetGame();
         alert('Dragon wins!')
       } else if (this.stats.dragon <= 0) {
-        actions.whatTheHecc();
+        this.resetGame();
         alert('Player wins!');
       }
       
+    },
+    resetGame(){
+      this.stats.dragon = 100;
+      this.stats.player = 100;
+      this.actionLog = [];
     },
     logAction(performer, action, hitpoints){
       this.actionLog.push({
@@ -121,9 +133,6 @@ export default Vue.extend({
         action: action,
         hitpoints: hitpoints
       });
-    },
-    dragonAction(){
-      this.attacc('dragon');
     },
     diceRoll(multiplier = 1){
       let result = _.random(1, 10) * multiplier;
